@@ -25,7 +25,7 @@ import org.joda.time.DateTime;
     @AssociationOverride(name="pk.TARGET",joinColumns = @JoinColumn(name="TARGET_ID"))
 })
 @Inheritance(strategy=InheritanceType.JOINED)
-@DiscriminatorColumn(name="REL_TYPE")
+//@DiscriminatorColumn(name="REL_TYPE")
 //@DiscriminatorValue("")
 public abstract class EnterpriseRelationship implements EnterpriseEntity, EnterpriseKey {
 
@@ -62,7 +62,6 @@ public abstract class EnterpriseRelationship implements EnterpriseEntity, Enterp
         getPk().setSOURCE(SOURCE);
     }
     
-    public abstract void setDTYpe
 
     public String getCHANGED_BY() {
         return CHANGED_BY;
