@@ -8,9 +8,9 @@ package EDS.Exception;
  *
  * @author KH
  */
-public class EnterpriseObjectNotRecognized extends Exception {
+public class EONotRecognizedException extends Exception {
     
-    public EnterpriseObjectNotRecognized(String objectName) {
+    public EONotRecognizedException(String objectName) {
         super("EnterpriseObject "+objectName+" is not registered!");
     }
     

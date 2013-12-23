@@ -18,13 +18,17 @@ import org.joda.time.DateTime;
  */
 @Entity
 @Table(name="TESTRELATIONSHIPA")
-@DiscriminatorValue("TESTRELATIONSHIPA")
-/*@PrimaryKeyJoinColumns({
-    @PrimaryKeyJoinColumn()
-})*/
 public class TestRelationshipA extends EnterpriseRelationship{
 
     private String REL_ATTR;
+    //protected EnterpriseRelationshipId pk = new TestRelationshipAId();
+    /*
+     * Temporary workaround for discriminator value not working
+     */
+    public TestRelationshipA(){
+        super();
+        this.pk.setREL_TYPE("TESTRELATIONSHIPA");
+    }
 
     public String getREL_ATTR() {
         return REL_ATTR;

@@ -5,16 +5,14 @@
 package EDS.BusinessUnit;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  *
  * @author KH
  */
 @Embeddable
+@DiscriminatorColumn(name="REL_TYPE")
 public class EnterpriseRelationshipId implements Serializable{
 
     private EnterpriseUnit SOURCE;

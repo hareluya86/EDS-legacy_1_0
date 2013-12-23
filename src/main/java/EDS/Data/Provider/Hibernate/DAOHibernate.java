@@ -9,6 +9,7 @@ import EDS.BusinessUnit.Test.TestRelationshipA;
 import EDS.Data.DAO;
 import EDS.Data.EnterpriseKey;
 import EDS.Data.EnterpriseEntity;
+import EDS.Data.Provider.Hibernate.DAOFactoryHibernate.ACCESS_TYPE;
 import EDS.Data.Provider.Hibernate.DAOFactoryHibernate.CONFIG_TYPE;
 import java.util.Collection;
 import javax.persistence.EntityManager;
@@ -28,6 +29,8 @@ public class DAOHibernate extends DAO {
     private Configuration cfg;
     private SessionFactory sessions;
     private CONFIG_TYPE config_type;
+    private ACCESS_TYPE access_type;
+    
 
     public DAOHibernate() {
         super();
@@ -48,6 +51,14 @@ public class DAOHibernate extends DAO {
     public void setConfig_type(CONFIG_TYPE config_type) {
         this.config_type = config_type;
     }
+
+    public ACCESS_TYPE getAccess_type() {
+        return access_type;
+    }
+
+    public void setAccess_type(ACCESS_TYPE access_type) {
+        this.access_type = access_type;
+    }
     
     /*
      * No outside access to SessionFactory required
@@ -64,10 +75,23 @@ public class DAOHibernate extends DAO {
 
     @Override
     public EnterpriseEntity getSingleObject(EnterpriseKey key) {
-        SessionFactory sf = cfg.buildSessionFactory();
-        Session s = sf.getCurrentSession();
+        EnterpriseEntity ee;
         
-        return (EnterpriseEntity)s.get(key.getClass(), key);
+        if(access_type==ACCESS_TYPE.SESSIONFACTORY){
+            SessionFactory sf = cfg.buildSessionFactory();
+            Session s = sf.getCurrentSession();
+            ee = (EnterpriseEntity)s.get(key.getClass(), key);
+        }else if(access_type==ACCESS_TYPE.ENTITYMANAGER){
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("HIBERNATE", cfg.getProperties());
+            EntityManager em = emf.createEntityManager();
+            ee = (EnterpriseEntity)em.find(key.getClass(), key);
+        }
+        else{
+            ee = null;
+        }
+            
+        
+        return ee;
         
     }
 

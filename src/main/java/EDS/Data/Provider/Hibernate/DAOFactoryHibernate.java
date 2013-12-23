@@ -19,6 +19,11 @@ public class DAOFactoryHibernate extends DAOFactory {
         ANNOTATION
     }
     
+    enum ACCESS_TYPE {
+        SESSIONFACTORY,
+        ENTITYMANAGER
+    }
+    
     @Override
     public DAO getDAO() {
         Configuration cfg = new Configuration();

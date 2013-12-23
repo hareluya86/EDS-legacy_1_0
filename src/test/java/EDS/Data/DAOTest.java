@@ -59,7 +59,7 @@ public class DAOTest {
         trA1.randInit();
         trA1.setSOURCE(tu1);
         trA1.setTARGET(tu2);
-        trA1.getPk().setREL_TYPE("TRA1");
+        //trA1.getPk().setREL_TYPE("TRA1");
         
         dao1.insertSingleObject(tu1);
         dao1.insertSingleObject(tu2);

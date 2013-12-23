@@ -13,6 +13,9 @@ import java.util.Collection;
  */
 public abstract class DAO {
     
+    /*
+     * Test methods in the development phase
+     */
     public abstract EnterpriseEntity getSingleObject(EnterpriseKey key);
     public abstract Collection<EnterpriseEntity> getManyObjects(Collection<EnterpriseKey> keys);
     
@@ -21,6 +24,8 @@ public abstract class DAO {
     
     public abstract void deleteSingleObject(EnterpriseKey key);
     public abstract void deleteManyObjects(Collection<EnterpriseKey> keys);
-    
+    /*
+     * Test methods in the development phase
+     */
     
 }
