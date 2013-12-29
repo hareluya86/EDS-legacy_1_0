@@ -15,10 +15,17 @@ import java.util.Map;
  */
 public class DAOFactoryEclipselink extends DAOFactory {
     
-    private Map<String,Object> DBConfig = new HashMap<String,Object>();
-
     @Override
     public DAO getDAO() {
+        
+        DAOEclipselink dao = new DAOEclipselink();
+        dao.setDBConfig(createFullConfig()); //Preferred way is programmatic config
+        return dao;
+    }
+    
+    public Map<String,Object> createFullConfig(){
+        Map<String,Object> DBConfig = createPartialConfig();
+        
         //DBConfig.put("provider","org.eclipse.persistence.jpa.PersistenceProvider");
         //DBConfig.put("exclude-unlisted-classes","false");
         DBConfig.put("javax.persistence.jdbc.url", "jdbc:mysql://localhost:3306/eds?characterEncoding=utf8");
@@ -27,9 +34,12 @@ public class DAOFactoryEclipselink extends DAOFactory {
         DBConfig.put("javax.persistence.jdbc.password", "eds");
         DBConfig.put("eclipselink.query-results-cache", false);
         DBConfig.put("eclipselink.ddl-generation", "create-tables");
-        DAOEclipselink dao = new DAOEclipselink();
-        dao.setDBConfig(DBConfig);
-        return dao;
+        
+        return DBConfig;
     }
     
+    public Map<String,Object> createPartialConfig(){
+        Map<String,Object> DBConfig = new HashMap<String,Object>();
+        return DBConfig;
+    }
 }

@@ -6,8 +6,6 @@ package EDS.BusinessUnit;
 
 import EDS.BusinessUnit.Test.TestUnit;
 import EDS.Context.ContextContainer;
-import EDS.Exception.ContextNotAllowedException;
-import EDS.Exception.EONotRecognizedException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,14 +17,4 @@ public abstract class EnterpriseUnitManagerFactory {
     
     private static Map<String,EnterpriseUnit> units = new HashMap<String,EnterpriseUnit>();
     
-    public static EnterpriseUnitManager getEnterpriseUnitManager(String name,ContextContainer cc) 
-            throws ContextNotAllowedException, EONotRecognizedException{
-        units.put("TestUnit", new TestUnit());
-        if(!cc.allow()) throw new ContextNotAllowedException("To create EU "+name); //Contextual check
-        if(!units.containsKey(name)) throw new EONotRecognizedException(name); //Name check
-        
-        EnterpriseUnitManager eum = new EnterpriseUnitManager();
-        eum.setEu(units.get(name));
-        return eum;
-    }
 }

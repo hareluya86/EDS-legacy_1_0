@@ -10,7 +10,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
-import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -23,27 +22,27 @@ import org.hibernate.annotations.Cascade;
 @TableGenerator(name="ENTERPRISEUNIT_SEQ",initialValue=1,allocationSize=10,table="SEQUENCE")
 public abstract class EnterpriseUnit implements EnterpriseEntity, EnterpriseKey{
     
-    private long OBJECTID;
-    //private String OBJECT_TYPE;
+    protected long OBJECTID;
+    protected String UNIT_TYPE;
     /*
      * Start and End dates should not be primary keys
      * - Only 1 instance of an entity should exist anytime
      * - If both start and end dates are PK, this means >1 record can be created
      * for 1 object id.
      */
-    /*@Id*/ private java.sql.Date START_DATE;
-    /*@Id*/ private java.sql.Date END_DATE;
+    /*@Id*/ protected java.sql.Date START_DATE;
+    /*@Id*/ protected java.sql.Date END_DATE;
     
-    private java.sql.Date DATE_CREATED;
-    private String CREATED__BY;
+    protected java.sql.Date DATE_CREATED;
+    protected String CREATED__BY;
     
-    private java.sql.Date DATE_CHANGED;
-    private String CHANGED__BY;
+    protected java.sql.Date DATE_CHANGED;
+    protected String CHANGED__BY;
     
-    private String SEARCH_TERM;
-    private String SHORT_NAME;
+    protected String SEARCH_TERM;
+    protected String SHORT_NAME;
 
-    private List<EnterpriseRelationship> toRelationships = new ArrayList<EnterpriseRelationship>();
+    protected List<EnterpriseRelationship> toRelationships = new ArrayList<EnterpriseRelationship>();
     
     public String getCHANGED__BY() {
         return CHANGED__BY;

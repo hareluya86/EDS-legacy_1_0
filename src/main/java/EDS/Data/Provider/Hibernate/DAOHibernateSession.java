@@ -2,27 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package EDS.Data.Provider.Eclipselink;
+package EDS.Data.Provider.Hibernate;
 
-import EDS.Data.DAO;
 import EDS.Data.EnterpriseEntity;
-import java.util.Map;
 
 /**
  *
  * @author KH
  */
-public class DAOEclipselink extends DAO{
-
-    private Map<String,Object> DBConfig;
-
-    public Map<String, Object> getDBConfig() {
-        return DBConfig;
-    }
-
-    public void setDBConfig(Map<String, Object> DBConfig) {
-        this.DBConfig = DBConfig;
-    }
+public class DAOHibernateSession extends DAOHibernate {
 
     @Override
     public void init() {
@@ -48,5 +36,5 @@ public class DAOEclipselink extends DAO{
     public void insertSingleEntity(EnterpriseEntity entity) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
 }

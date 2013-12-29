@@ -14,6 +14,9 @@ import org.hibernate.cfg.Configuration;
  */
 public class DAOFactoryHibernate extends DAOFactory {
 
+    /*
+     * 
+     */
     enum CONFIG_TYPE {
         FILE,
         ANNOTATION
@@ -24,9 +27,37 @@ public class DAOFactoryHibernate extends DAOFactory {
         ENTITYMANAGER
     }
     
+    private CONFIG_TYPE config_type = CONFIG_TYPE.ANNOTATION;
+    private ACCESS_TYPE access_type = ACCESS_TYPE.ENTITYMANAGER;
+    
     @Override
     public DAO getDAO() {
-        Configuration cfg = new Configuration();
+        
+        DAOHibernate dao;
+        
+        switch(access_type){
+            case SESSIONFACTORY :   dao = new DAOHibernateSession();
+                                    break; 
+            case ENTITYMANAGER  :   dao = new DAOHibernateEntityManager();
+                                    break;
+            default             :   dao = new DAOHibernateEntityManager();
+                                    break;
+        }
+        
+        switch(config_type){
+            case FILE       :   dao.setCfg(createPartialConfig());
+                                break;
+            case ANNOTATION :   dao.setCfg(createFullConfig());
+                                break;
+            default         :   dao.setCfg(createFullConfig()); //default config type
+                                break;
+        }
+        
+        return dao;
+    }
+    
+    private Configuration createFullConfig(){
+        Configuration cfg = createPartialConfig();
         cfg.setProperty("hibernate.current_session_context_class", "thread");
         cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         cfg.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
@@ -35,19 +66,19 @@ public class DAOFactoryHibernate extends DAOFactory {
         cfg.setProperty("hibernate.connection.password","eds");
         cfg.setProperty("hibernate.c3p0.min_size","5");
         cfg.setProperty("hibernate.c3p0.max_size","20");
-        cfg.setProperty("hibernate.c3p0.timeout","1800");
+        cfg.setProperty("hibernate.c3p0.timeout","30");
         cfg.setProperty("hibernate.c3p0.max_statements","100");
         cfg.setProperty("hibernate.hbm2ddl.auto","update");
         cfg.setProperty("hibernate.archive.autodetection","class, hbm");
         cfg.setProperty("hibernate.show_sql","true");
         cfg.setProperty("hibernate.connection.autocommit","false");
-        //cfg.setProperty("","");
         
-        DAOHibernate dao = new DAOHibernate();
-        dao.setCfg(cfg);
-        dao.setConfig_type(CONFIG_TYPE.FILE);//Default configuration and mapping type
-        
-        return dao;
+        return cfg;
+    }
+    
+    private Configuration createPartialConfig(){
+        Configuration cfg = new Configuration();
+        return cfg;
     }
     
 }

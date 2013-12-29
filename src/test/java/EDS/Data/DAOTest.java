@@ -11,6 +11,7 @@ import EDS.BusinessUnit.Test.TestUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Stack;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -20,14 +21,22 @@ import static org.junit.Assert.*;
  */
 public class DAOTest {
     
+    int numOfDAOs = 10;
+    Stack<DAO> DAOs;
     DAO dao1;
     DAO dao2;
     
     public DAOTest() {
+        DAOs = new Stack<DAO>();
+        for(int i=0; i<numOfDAOs; i++){
+            DAO daoTemp = DAOFactory.getDAOFactory(DAOFactory.JPAType.HIBERNATE).getDAO();
+            DAOs.push(daoTemp);
+        }
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        
     }
 
     @AfterClass
@@ -37,13 +46,40 @@ public class DAOTest {
     @Before
     public void setUp() {
         //dao1 = DAOFactory.getDAOFactory(DAOFactory.JPAType.ECLIPSELINK).getDAO();
-        dao1 = DAOFactory.getDAOFactory(DAOFactory.JPAType.HIBERNATE).getDAO();
+        dao1 = DAOs.pop();
     }
     
     @After
     public void tearDown() {
+        if(dao1 != null)
+            dao1.close();
     }
-
+    
+    /**
+     * Test of init(), start(), commit() and close() methods of the DAO
+     * Method numbering:
+     * M1) init()
+     * M2) start()
+     * M3) commit()
+     * M4) close()
+     */
+    
+    /**
+     * Test case 1: M1,M2,M3,M4
+     */
+    @Test
+    public void testDAOPhases1(){
+        try{
+            dao1.init();
+            dao1.start();
+            dao1.commit();
+            dao1.close();
+        }catch(Exception e){
+            fail("testDAOPhases1 failed : "+e.getMessage());
+        }
+        
+        
+    }
     /**
      * Test of getSingleObject method, of class DAO.
      */
@@ -61,98 +97,19 @@ public class DAOTest {
         trA1.setTARGET(tu2);
         //trA1.getPk().setREL_TYPE("TRA1");
         
-        dao1.insertSingleObject(tu1);
-        dao1.insertSingleObject(tu2);
-        dao1.insertSingleObject(trA1);
-    }
-
-    /**
-     * Test of getManyObjects method, of class DAO.
-     */
-    @Test
-    public void testGetManyObjects() {
-        System.out.println("getManyObjects");
-        Collection<EnterpriseKey> keys = null;
-        DAO instance = new DAOImpl();
-        Collection expResult = null;
-        Collection result = instance.getManyObjects(keys);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of insertSingleObject method, of class DAO.
-     */
-    @Test
-    public void testInsertSingleObject() {
-        System.out.println("insertSingleObject");
-        EnterpriseEntity row = null;
-        DAO instance = new DAOImpl();
-        instance.insertSingleObject(row);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of insertManyObjects method, of class DAO.
-     */
-    @Test
-    public void testInsertManyObjects() {
-        System.out.println("insertManyObjects");
-        Collection<EnterpriseEntity> objects = null;
-        DAO instance = new DAOImpl();
-        instance.insertManyObjects(objects);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of deleteSingleObject method, of class DAO.
-     */
-    @Test
-    public void testDeleteSingleObject() {
-        System.out.println("deleteSingleObject");
-        EnterpriseKey key = null;
-        DAO instance = new DAOImpl();
-        instance.deleteSingleObject(key);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of deleteManyObjects method, of class DAO.
-     */
-    @Test
-    public void testDeleteManyObjects() {
-        System.out.println("deleteManyObjects");
-        Collection<EnterpriseKey> keys = null;
-        DAO instance = new DAOImpl();
-        instance.deleteManyObjects(keys);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-    }
-
-    public class DAOImpl extends DAO {
-
-        public EnterpriseEntity getSingleObject(EnterpriseKey key) {
-            return null;
+        try{
+            dao1.init();
+            dao1.start();
+            dao1.insertSingleEntity(tu1);
+            dao1.insertSingleEntity(tu2);
+            dao1.insertSingleEntity(trA1);
+            dao1.commit();
+        }catch(DBConnectionException dbce){
+            fail("Database connection not opened!");
+            dbce.printStackTrace(System.out);
         }
-
-        public Collection<EnterpriseEntity> getManyObjects(Collection<EnterpriseKey> keys) {
-            return null;
-        }
-
-        public void insertSingleObject(EnterpriseEntity row) {
-        }
-
-        public void insertManyObjects(Collection<EnterpriseEntity> objects) {
-        }
-
-        public void deleteSingleObject(EnterpriseKey key) {
-        }
-
-        public void deleteManyObjects(Collection<EnterpriseKey> keys) {
-        }
+        dao1.close();
     }
+
+    
 }

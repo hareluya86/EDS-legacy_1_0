@@ -25,8 +25,8 @@ import org.joda.time.DateTime;
 @DiscriminatorValue("TESTUNIT")
 public class TestUnit extends EnterpriseUnit {
 
-    private String TESTVARIABLE1;
-    private String TESTVARIABLE2;
+    protected String TESTVARIABLE1;
+    protected String TESTVARIABLE2;
     
     public TestUnit() {
     }
