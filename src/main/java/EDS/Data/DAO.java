@@ -28,7 +28,9 @@ public abstract class DAO {
      * runtime errors. Alternatively, the provider-specific implementations can 
      * call this in all CUD methods, but it is not advisable because the client 
      * may decide to insert multiple CUD operations within 1 transaction.
-     * @throws DBConnectionException if the DB connection cannot be opened
+     * 
+     * @throws DBConnectionException    if the DB connection cannot be opened or 
+     *                                  is lost halfway
      */
     public abstract void start()throws DBConnectionException;
     
@@ -40,7 +42,10 @@ public abstract class DAO {
      * Alternatively, provider specific implementations can call this in all CUD
      * methods, but it is not advisable because the client may decide to insert 
      * multiple CUD operations within 1 transaction. 
-     * @throws DBConnectionException if the DB connection cannot be opened
+     * 
+     * @throws DBConnectionException    if the DB connection cannot be opened or 
+     *                                  is lost halfway
+     *                               
      */
     public abstract void commit()throws DBConnectionException;
     

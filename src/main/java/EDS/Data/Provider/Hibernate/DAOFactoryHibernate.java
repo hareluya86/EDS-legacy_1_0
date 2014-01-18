@@ -73,6 +73,8 @@ public class DAOFactoryHibernate extends DAOFactory {
         cfg.setProperty("hibernate.show_sql","true");
         cfg.setProperty("hibernate.connection.autocommit","false");
         
+        //cfg.setProperty("hibernate.session_factory_name","hi");
+        
         return cfg;
     }
     

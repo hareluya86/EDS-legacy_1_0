@@ -6,7 +6,6 @@ package EDS.Data.Provider.Hibernate;
 
 import EDS.Data.DBConnectionException;
 import EDS.Data.EnterpriseEntity;
-import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import javax.persistence.*;
 import org.hibernate.exception.GenericJDBCException;
 
@@ -22,7 +21,7 @@ public class DAOHibernateEntityManager extends DAOHibernate {
     
     @Override
     public void init() {
-        emf = Persistence.createEntityManagerFactory("HIBERNATE_ENTITYMANAGER", this.cfg.getProperties());
+        emf = Persistence.createEntityManagerFactory("HIBERNATE", this.cfg.getProperties());
         em = emf.createEntityManager();
     }
 
@@ -73,6 +72,8 @@ public class DAOHibernateEntityManager extends DAOHibernate {
 
     @Override
     public void close(){
+        if(et != null && et.isActive())
+            et = null;
         if(em != null && em.isOpen())
             em.close();
         if(emf != null && emf.isOpen())
