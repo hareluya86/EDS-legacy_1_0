@@ -27,7 +27,7 @@ public class DAOHibernateSession extends DAOHibernate {
     @Override
     public void init() {
         //cfg.configure();
-        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
+        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();
         sessionFactory = this.cfg.buildSessionFactory(serviceRegistry);
     }
 
