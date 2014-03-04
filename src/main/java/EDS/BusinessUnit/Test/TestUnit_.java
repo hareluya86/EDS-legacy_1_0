@@ -5,6 +5,7 @@
 package EDS.BusinessUnit.Test;
 
 import EDS.BusinessUnit.EnterpriseUnit_;
+import java.util.Map;
 
 /**
  *
@@ -20,6 +21,11 @@ public class TestUnit_ extends EnterpriseUnit_ {
     @Override
     public String pathName() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Map<String, Class> exportAsMap() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

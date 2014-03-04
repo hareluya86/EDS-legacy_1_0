@@ -6,6 +6,8 @@ package EDS.Data.Provider.Hibernate;
 
 import EDS.Data.DBConnectionException;
 import EDS.Data.EnterpriseEntity;
+import java.util.Collection;
+import java.util.Iterator;
 import javax.persistence.*;
 import org.hibernate.exception.GenericJDBCException;
 
@@ -55,9 +57,12 @@ public class DAOHibernateEntityManager extends DAOHibernate {
         if(et == null) throw new RuntimeException("Hibernate DAO Commit: Transaction is not initialized yet.");
         //if(!et.isActive()) throw new RuntimeException("Hibernate DAO Commit: Transaction is not active yet.");//unnecessary as et.commit() will throw IllegalStateException
         
+        //what if transaction is marked for rollback?
+            
         try{
             et.commit();
         }catch(PersistenceException pe){
+            et.rollback();
             if(pe.getCause() instanceof GenericJDBCException){
                 GenericJDBCException gjdbce = (GenericJDBCException)pe.getCause();
                 if(gjdbce.getSQLState()==null || gjdbce.getSQLState().equalsIgnoreCase("null"))
@@ -81,8 +86,52 @@ public class DAOHibernateEntityManager extends DAOHibernate {
     }
 
     @Override
-    public void insertSingleEntity(EnterpriseEntity entity) {
+    public void insertEntity(EnterpriseEntity entity) {
         em.persist(entity);
+        em.flush(); //pushes entity to datastore (provider's cache), but doesn't commit to database!
+
+    }
+
+    @Override
+    public void insertEntities(Collection<EnterpriseEntity> entities) {
+        Iterator<EnterpriseEntity> i = entities.iterator();
+        while(i.hasNext()){
+            EnterpriseEntity ee = i.next();
+            em.persist(ee);
+        }
+        em.flush();
+    }
+
+    @Override
+    public void updateEntity(EnterpriseEntity entity) {
+        entity = em.merge(entity);
+        em.flush();
+    }
+
+    @Override
+    public void updateEntities(Collection<EnterpriseEntity> entities) {
+        Iterator<EnterpriseEntity> i = entities.iterator();
+        while(i.hasNext()){
+            EnterpriseEntity ee = i.next();
+            ee = em.merge(ee);
+        }
+        em.flush();
+    }
+
+    @Override
+    public void deleteEntity(EnterpriseEntity entity) {
+        em.remove(entity);
+        em.flush();
+    }
+
+    @Override
+    public void deleteEntities(Collection<EnterpriseEntity> entities) {
+        Iterator<EnterpriseEntity> i = entities.iterator();
+        while(i.hasNext()){
+            EnterpriseEntity ee = i.next();
+            em.remove(ee);
+        }
+        em.flush();
     }
     
 }

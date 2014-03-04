@@ -9,6 +9,7 @@ import EDS.Data.EnterpriseKey;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.*;
 
 /**
@@ -34,30 +35,30 @@ public abstract class EnterpriseUnit implements EnterpriseEntity, EnterpriseKey{
     /*@Id*/ protected java.sql.Date END_DATE;
     
     protected java.sql.Date DATE_CREATED;
-    protected String CREATED__BY;
+    protected String CREATED_BY;
     
     protected java.sql.Date DATE_CHANGED;
-    protected String CHANGED__BY;
+    protected String CHANGED_BY;
     
     protected String SEARCH_TERM;
     protected String SHORT_NAME;
 
     protected List<EnterpriseRelationship> toRelationships = new ArrayList<EnterpriseRelationship>();
     
-    public String getCHANGED__BY() {
-        return CHANGED__BY;
+    public String getCHANGED_BY() {
+        return CHANGED_BY;
     }
 
-    public void setCHANGED__BY(String CHANGED__BY) {
-        this.CHANGED__BY = CHANGED__BY;
+    public void setCHANGED_BY(String CHANGED_BY) {
+        this.CHANGED_BY = CHANGED_BY;
     }
 
-    public String getCREATED__BY() {
-        return CREATED__BY;
+    public String getCREATED_BY() {
+        return CREATED_BY;
     }
 
-    public void setCREATED__BY(String CREATED__BY) {
-        this.CREATED__BY = CREATED__BY;
+    public void setCREATED_BY(String CREATED_BY) {
+        this.CREATED_BY = CREATED_BY;
     }
 
     public Date getDATE_CHANGED() {
@@ -129,4 +130,14 @@ public abstract class EnterpriseUnit implements EnterpriseEntity, EnterpriseKey{
     public void addRelationship(EnterpriseRelationship rel){
         this.toRelationships.add(rel);
     }
+
+    /**
+     * This is to allow front-end components to access all of the fields in each
+     * EnterpriseUnit implementation. 
+     * @return Map  A collection of <Field,Value>
+     */
+    @Override
+    public abstract Map<String, Object> exportAsMap();
+    
+    
 }

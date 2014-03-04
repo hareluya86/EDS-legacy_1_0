@@ -14,9 +14,6 @@ import org.hibernate.cfg.Configuration;
  */
 public class DAOFactoryHibernate extends DAOFactory {
 
-    /*
-     * 
-     */
     enum CONFIG_TYPE {
         FILE,
         ANNOTATION

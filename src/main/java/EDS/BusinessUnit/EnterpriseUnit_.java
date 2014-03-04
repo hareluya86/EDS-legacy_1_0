@@ -4,6 +4,7 @@
  */
 package EDS.BusinessUnit;
 
+import java.util.Map;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -27,10 +28,19 @@ public abstract class EnterpriseUnit_ {
     //if metamodel is abstract, no concrete name method
     public abstract String name();
     
-    /*
+    /**
      * pathName():String
      * - returns "EnterpriseUnit/ExampleUnit"
      * - no idea what it would be used for yet
      */
     public abstract String pathName();
+    
+    /**
+     * Returns a map object of <Field,FieldType>
+     * <p>
+     * 
+     * 
+     * @return Map  A map object of <Field,FieldType>
+     */
+    public abstract Map<String,Class> exportAsMap();
 }

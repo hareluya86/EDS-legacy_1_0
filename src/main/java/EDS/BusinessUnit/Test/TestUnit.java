@@ -4,10 +4,8 @@
  */
 package EDS.BusinessUnit.Test;
 
-import EDS.BusinessUnit.EnterpriseRelationship;
 import EDS.BusinessUnit.EnterpriseUnit;
 import EDS.Data.EnterpriseKey;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.DiscriminatorValue;

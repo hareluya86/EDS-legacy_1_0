@@ -6,6 +6,7 @@ package EDS.Data.Provider.Hibernate;
 
 import EDS.Data.DBConnectionException;
 import EDS.Data.EnterpriseEntity;
+import java.util.Collection;
 import javax.persistence.PersistenceException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -79,8 +80,33 @@ public class DAOHibernateSession extends DAOHibernate {
     }
 
     @Override
-    public void insertSingleEntity(EnterpriseEntity entity) {
+    public void insertEntity(EnterpriseEntity entity) {
         session.save(entity);
+    }
+
+    @Override
+    public void insertEntities(Collection<EnterpriseEntity> entities) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updateEntity(EnterpriseEntity entity) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updateEntities(Collection<EnterpriseEntity> entities) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteEntity(EnterpriseEntity entity) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteEntities(Collection<EnterpriseEntity> entities) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
