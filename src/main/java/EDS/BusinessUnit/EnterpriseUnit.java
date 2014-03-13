@@ -132,6 +132,18 @@ public abstract class EnterpriseUnit implements EnterpriseEntity, EnterpriseKey{
         this.toRelationships.add(rel);
     }
 
+    
+    @OneToMany(fetch=FetchType.LAZY)
+    //@JoinColumn(name="BELONG_TO_OBJECT_OBJECTID")
+    public List<EnterpriseData> getData() {
+        return data;
+    }
+
+    public void setData(List<EnterpriseData> data) {
+        this.data = data;
+    }
+    /**/
+
     /**
      * This is to allow front-end components to access all of the fields in each
      * EnterpriseUnit implementation. 

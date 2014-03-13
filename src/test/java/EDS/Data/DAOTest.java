@@ -6,6 +6,7 @@ package EDS.Data;
 
 import EDS.BusinessUnit.EnterpriseRelationship;
 import EDS.BusinessUnit.EnterpriseUnit;
+import EDS.BusinessUnit.Test.TestData;
 import EDS.BusinessUnit.Test.TestRelationshipA;
 import EDS.BusinessUnit.Test.TestUnit;
 import java.util.ArrayList;
@@ -426,12 +427,19 @@ public class DAOTest {
         trA1.setTARGET(tu2);
         //trA1.getPk().setREL_TYPE("TRA1");
         
+        TestData td1 = new TestData();
+        td1.randInit();
+        tu1.getData().add(td1);
+        td1.setBELONG_TO_OBJECT(tu1);
+        
         try{
             dao1.init();
             dao1.start();
             dao1.insertEntity(tu1);
             dao1.insertEntity(tu2);
+            dao1.insertEntity(td1);
             dao1.insertEntity(trA1);
+            
             dao1.commit();
             dao1.close();
         }catch(DBConnectionException dbce){
