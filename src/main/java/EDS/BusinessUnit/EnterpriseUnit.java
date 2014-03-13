@@ -44,6 +44,7 @@ public abstract class EnterpriseUnit implements EnterpriseEntity, EnterpriseKey{
     protected String SHORT_NAME;
 
     protected List<EnterpriseRelationship> toRelationships = new ArrayList<EnterpriseRelationship>();
+    protected List<EnterpriseData> data = new ArrayList<EnterpriseData>();
     
     public String getCHANGED_BY() {
         return CHANGED_BY;
