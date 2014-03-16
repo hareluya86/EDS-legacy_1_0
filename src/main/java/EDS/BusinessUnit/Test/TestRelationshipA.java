@@ -7,6 +7,7 @@ package EDS.BusinessUnit.Test;
 import EDS.BusinessUnit.EnterpriseRelationship;
 import EDS.BusinessUnit.EnterpriseRelationshipId;
 import EDS.Data.EnterpriseKey;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
@@ -39,7 +40,7 @@ public class TestRelationshipA extends EnterpriseRelationship{
     }
     
     @Override
-    public EnterpriseKey enterpriseKey() {
+    public Object key() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

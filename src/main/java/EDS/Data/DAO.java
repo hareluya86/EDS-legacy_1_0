@@ -5,6 +5,9 @@
 package EDS.Data;
 
 import java.util.Collection;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 /**
  *
@@ -151,4 +154,45 @@ public abstract class DAO {
      *          transactions started.
      */
     public abstract void deleteEntities(Collection<EnterpriseEntity> entities);
+    
+    /**
+     * Returns the underlying EntityManager object.
+     * <p>
+     * If the underlying DAO does not implement the EntityManager, it should 
+     * throw a NullPointerException.
+     * 
+     * @return EntityManager    The underlying EM object
+     */
+    public abstract EntityManager getEntityManager();
+    
+    /**
+     * Returns the EnterpriseEntity with the provided key
+     * <p>
+     * If the EnterpriseEntity is not found, null is returned.
+     * 
+     * @param key   The EnterpriseKey of the required EnterpriseEntity
+     * @return      The matching EnterpriseEntity
+     */
+    public abstract EnterpriseEntity getEntity(EnterpriseKey key);
+    
+    /**
+     * Returns a collection of EnterpriseEntities which matches the provided criteria.
+     * <p>
+     * Only those EnterpriseEntity objects that match the provided criteria will be 
+     * returned. 
+     * <p>
+     * 
+     * @param query A javax.persistence.criteria.CriteriaQuery object
+     * @return      A Collection of matching EnterpriseEntity objects
+     */
+    public abstract Collection<EnterpriseEntity> getEntities(CriteriaQuery query);
+    
+    /**
+     * Returns a CriteriaBuilder object.
+     * <p>
+     * Typed queries can be built using the Java Criteria API. 
+     * 
+     * @return      A javax.persistence.criteria.CriteriaBuilder object
+     */
+    public abstract CriteriaBuilder getCriteriaBuilder();
 }

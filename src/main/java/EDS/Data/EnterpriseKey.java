@@ -11,4 +11,6 @@ import java.io.Serializable;
  * @author KH
  */
 public interface EnterpriseKey extends EnterpriseObject {
+    
+    public Object key();
 }

@@ -6,9 +6,16 @@ package EDS.Data.Provider.Hibernate;
 
 import EDS.Data.DBConnectionException;
 import EDS.Data.EnterpriseEntity;
+import EDS.Data.EnterpriseKey;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.exception.GenericJDBCException;
 
 /**
@@ -99,6 +106,7 @@ public class DAOHibernateEntityManager extends DAOHibernate {
             EnterpriseEntity ee = i.next();
             em.persist(ee);
         }
+        //em.persist(entities);
         em.flush();
     }
 
@@ -133,5 +141,49 @@ public class DAOHibernateEntityManager extends DAOHibernate {
         }
         em.flush();
     }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return em;
+    }
+
+    @Override
+    public EnterpriseEntity getEntity(EnterpriseKey key) {
+        return (EnterpriseEntity) em.find(key.getClass(), key.key());
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
+    @Override
+    public Collection<EnterpriseEntity> getEntities(CriteriaQuery query) {
+        TypedQuery typedQuery = em.createQuery(query);
+        List results = typedQuery.getResultList();
+        return results;
+    }
+
+    @Override
+    public CriteriaBuilder getCriteriaBuilder() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /**
+     * Helper methods
+     */
+    Map<String,List<EnterpriseKey>> sortIntoBuckets(Collection<EnterpriseKey> pkList){
+        Map<String,List<EnterpriseKey>> entityHashMap = new HashMap<String,List<EnterpriseKey>>();
+        Iterator i = pkList.iterator();
+        while(i.hasNext()){
+            //Must add a check here for DBObject type
+            EnterpriseKey pk = (EnterpriseKey)i.next();
+            String entityName = pk.tableName();
+            if(entityHashMap.containsKey(entityName)){
+                entityHashMap.get(entityName).add(pk);
+            }
+            else{
+                ArrayList<EnterpriseKey> groupedPKList = new ArrayList<EnterpriseKey>();
+                groupedPKList.add(pk);
+                entityHashMap.put(entityName, groupedPKList);
+            }
+        }
+        return entityHashMap;
+    }
 }

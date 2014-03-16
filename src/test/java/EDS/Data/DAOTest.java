@@ -5,14 +5,18 @@
 package EDS.Data;
 
 import EDS.BusinessUnit.EnterpriseRelationship;
-import EDS.BusinessUnit.EnterpriseUnit;
+import EDS.BusinessUnit.EnterpriseUnit_;
 import EDS.BusinessUnit.Test.TestData;
 import EDS.BusinessUnit.Test.TestRelationshipA;
 import EDS.BusinessUnit.Test.TestUnit;
+import EDS.BusinessUnit.Test.TestUnit_;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Stack;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -53,7 +57,9 @@ public class DAOTest {
         for(int i=0; i<numOfDAOs; i++){
             DAO daoTemp = DAOFactory.getDAOFactory(DEFAULT_JPA_PROVIDER).getDAO();
             DAOPool.push(daoTemp);
-            
+        }
+        
+        for(int i=0; i<numOfTestUnits; i++){
             EnterpriseEntity ee = new TestUnit();
             ee.randInit();
             testEntities.add(ee);
@@ -414,13 +420,11 @@ public class DAOTest {
      * Test of getSingleObject method, of class DAO.
      */
     @Test
-    public void testInsertSingleObject1() {
-        System.out.println("testInsertSingleObject 1");
+    public void testInsertEUwithERandED1() {
+        System.out.println("testInsertEUwithERandED1");
         DAO dao1 = DAOPool.pop();
-        TestUnit tu1 = new TestUnit();
-        TestUnit tu2 = new TestUnit();
-        tu1.randInit();
-        tu2.randInit();
+        TestUnit tu1 = (TestUnit) testEntities.pop();
+        TestUnit tu2 = (TestUnit) testEntities.pop();
         EnterpriseRelationship trA1 = new TestRelationshipA();
         trA1.randInit();
         trA1.setSOURCE(tu1);
@@ -452,5 +456,87 @@ public class DAOTest {
         assertTrue(true);
     }
 
+    @Test
+    public void testInsertEUandDelete(){
+        System.out.println("testInsertEUandDelete1");
+        DAO dao1 = DAOPool.pop();
+        TestUnit tu1 = (TestUnit) testEntities.pop();
+        tu1.randInit();
+        try{
+            dao1.init();
+            dao1.start();
+            dao1.insertEntity(tu1);
+            dao1.deleteEntity(tu1);
+            dao1.commit();
+            dao1.close();
+        }catch(DBConnectionException dbce){
+            fail("Database connection not opened!");
+            dbce.printStackTrace(System.out);
+        }catch(Throwable ex){
+            fail("Failed: "+ex.getMessage());
+            ex.printStackTrace();
+        }
+        DAO dao2 = DAOPool.pop();
+        dao2.init();
+        TestUnit tu2 = (TestUnit) dao2.getEntity(tu1);
+        assertNull(tu2);
+    }
     
+    @Test
+    public void testInsertAndGetMany1(){
+        System.out.println("testInsertAndGetMany1");
+        
+        DAO dao1 = DAOPool.pop(); //for inserting and retrieval (should be cached)
+        DAO dao2 = DAOPool.pop(); //for retrieval
+        
+        try{
+            dao1.init();
+            dao1.start();
+            dao1.insertEntities(testEntities);
+            dao1.commit();
+            dao1.close();
+        }catch(DBConnectionException dbce){
+            fail("Database connection not opened!");
+            dbce.printStackTrace(System.out);
+        }catch(Throwable ex){
+            fail("Failed: "+ex.getMessage());
+            ex.printStackTrace();
+        }
+        
+        //Get entitymanager and build criteria from there
+        dao1.init();
+        EntityManager em = dao1.getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery();
+        Root<TestUnit> root = cq.from(TestUnit.class);
+        List<Long> objectids = new ArrayList<Long>();
+        for(EnterpriseEntity tu:testEntities){
+            objectids.add((Long)tu.exportAsMap().get("OBJECTID"));
+        }
+        cq.select(root);
+        cq.where(root.get(TestUnit_.OBJECTID).in(objectids));
+        
+        List<TestUnit> results = em.createQuery(cq).getResultList();
+        
+        //verify results
+        assertEquals(testEntities,results);
+        for(TestUnit tu:results){
+            assertTrue(testEntities.contains(tu));
+        }
+        
+        //verify with another DAO instance
+        dao2.init();
+        CriteriaBuilder cb2 = em.getCriteriaBuilder();
+        CriteriaQuery cq2 = cb.createQuery();
+        Root<TestUnit> root2 = cq2.from(TestUnit.class);
+        cq2.select(root2);
+        cq2.where(root2.get(TestUnit_.OBJECTID).in(objectids));
+        
+        List<TestUnit> results2 = new ArrayList(dao2.getEntities(cq2));
+        
+        assertEquals(testEntities,results2);
+        for(TestUnit tu:results2){
+            assertTrue(testEntities.contains(tu));
+        }
+    }
 }

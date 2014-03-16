@@ -10,6 +10,7 @@ import EDS.Data.EnterpriseEntity;
 import EDS.Data.EnterpriseKey;
 import java.sql.Date;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -20,6 +21,7 @@ import javax.persistence.ManyToOne;
  * @author vincent.a.lee
  */
 @Entity
+@EntityListeners(DateCreatedListener.class)
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class EnterpriseData implements EnterpriseEntity, EnterpriseKey{
     
@@ -32,10 +34,10 @@ public abstract class EnterpriseData implements EnterpriseEntity, EnterpriseKey{
     protected long SEQNUM;
     protected boolean DATA_LOCK;
     
-    protected java.sql.Date CREATED_ON;
+    protected java.sql.Date DATE_CREATED;
     protected String CREATED_BY;
     
-    protected java.sql.Date CHANGED_ON;
+    protected java.sql.Date DATE_CHANGED;
     protected String CHANGED_BY;
 
     @Id @ManyToOne
@@ -87,12 +89,12 @@ public abstract class EnterpriseData implements EnterpriseEntity, EnterpriseKey{
         this.DATA_LOCK = DATA_LOCK;
     }
 
-    public Date getCREATED_ON() {
-        return CREATED_ON;
+    public Date getDATE_CREATED() {
+        return DATE_CREATED;
     }
 
-    public void setCREATED_ON(Date CREATED_ON) {
-        this.CREATED_ON = CREATED_ON;
+    public void setDATE_CREATED(Date DATE_CREATED) {
+        this.DATE_CREATED = DATE_CREATED;
     }
 
     public String getCREATED_BY() {
@@ -103,12 +105,12 @@ public abstract class EnterpriseData implements EnterpriseEntity, EnterpriseKey{
         this.CREATED_BY = CREATED_BY;
     }
 
-    public Date getCHANGED_ON() {
-        return CHANGED_ON;
+    public Date getDATE_CHANGED() {
+        return DATE_CHANGED;
     }
 
-    public void setCHANGED_ON(Date CHANGED_ON) {
-        this.CHANGED_ON = CHANGED_ON;
+    public void setDATE_CHANGED(Date DATE_CHANGED) {
+        this.DATE_CHANGED = DATE_CHANGED;
     }
 
     public String getCHANGED_BY() {

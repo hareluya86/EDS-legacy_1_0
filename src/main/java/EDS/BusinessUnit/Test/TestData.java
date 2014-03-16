@@ -33,7 +33,7 @@ public class TestData extends EnterpriseData {
     
     
     @Override
-    public EnterpriseKey enterpriseKey() {
+    public Object key() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

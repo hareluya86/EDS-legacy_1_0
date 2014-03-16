@@ -6,8 +6,12 @@ package EDS.Data.Provider.Eclipselink;
 
 import EDS.Data.DAO;
 import EDS.Data.EnterpriseEntity;
+import EDS.Data.EnterpriseKey;
 import java.util.Collection;
 import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 /**
  *
@@ -72,6 +76,26 @@ public class DAOEclipselink extends DAO{
 
     @Override
     public void deleteEntities(Collection<EnterpriseEntity> entities) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public EnterpriseEntity getEntity(EnterpriseKey key) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Collection<EnterpriseEntity> getEntities(CriteriaQuery query) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public CriteriaBuilder getCriteriaBuilder() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

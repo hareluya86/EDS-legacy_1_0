@@ -6,9 +6,7 @@ package EDS.BusinessUnit;
 
 import EDS.Data.EnterpriseEntity;
 import EDS.Data.EnterpriseKey;
-import java.io.Serializable;
 import java.sql.Date;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
@@ -20,6 +18,7 @@ import org.joda.time.DateTime;
  */
 @Entity
 @Table(name="ENTERPRISE_RELATIONSHIP")
+@EntityListeners(DateCreatedListener.class)
 @AssociationOverrides({
     @AssociationOverride(name="pk.SOURCE",joinColumns = @JoinColumn(name="SOURCE_ID")),
     @AssociationOverride(name="pk.TARGET",joinColumns = @JoinColumn(name="TARGET_ID"))
@@ -31,8 +30,11 @@ public abstract class EnterpriseRelationship implements EnterpriseEntity, Enterp
 
     protected EnterpriseRelationshipId pk = new EnterpriseRelationshipId();
     
-    private java.sql.Date LAST_CHANGED;
+    private java.sql.Date DATE_CHANGED;
     private String CHANGED_BY;
+    
+    private java.sql.Date DATE_CREATED;
+    private String CREATED_BY;
     
     @EmbeddedId
     public EnterpriseRelationshipId getPk() {
@@ -63,24 +65,48 @@ public abstract class EnterpriseRelationship implements EnterpriseEntity, Enterp
     }
     
 
+    @Override
     public String getCHANGED_BY() {
         return CHANGED_BY;
     }
 
+    @Override
     public void setCHANGED_BY(String CHANGED_BY) {
         this.CHANGED_BY = CHANGED_BY;
     }
 
-    public Date getLAST_CHANGED() {
-        return LAST_CHANGED;
-    }
-
-    public void setLAST_CHANGED(Date LAST_CHANGED) {
-        this.LAST_CHANGED = LAST_CHANGED;
+    @Override
+    public Date getDATE_CHANGED() {
+        return DATE_CHANGED;
     }
 
     @Override
-    public EnterpriseKey enterpriseKey() {
+    public void setDATE_CHANGED(java.sql.Date DATE_CHANGED) {
+        this.DATE_CHANGED = DATE_CHANGED;
+    }
+    
+    @Override
+    public void setDATE_CREATED(java.sql.Date DATE_CREATED) {
+        this.DATE_CREATED = DATE_CREATED;
+    }
+
+    @Override
+    public java.sql.Date getDATE_CREATED() {
+        return DATE_CREATED;
+    }
+
+    @Override
+    public void setCREATED_BY(String CREATED_BY) {
+        this.CREATED_BY = CREATED_BY; 
+    }
+
+    @Override
+    public String getCREATED_BY() {
+        return CREATED_BY;
+    }
+
+    @Override
+    public Object key() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -92,7 +118,7 @@ public abstract class EnterpriseRelationship implements EnterpriseEntity, Enterp
         String var = "VARIABLE_";
         
         this.setCHANGED_BY(var+randInt);
-        this.setLAST_CHANGED(sqlDate1);
+        this.setDATE_CHANGED(sqlDate1);
     }
 
     @Override

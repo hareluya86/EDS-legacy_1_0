@@ -6,8 +6,12 @@ package EDS.Data.Provider.Hibernate;
 
 import EDS.Data.DBConnectionException;
 import EDS.Data.EnterpriseEntity;
+import EDS.Data.EnterpriseKey;
 import java.util.Collection;
+import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -106,6 +110,26 @@ public class DAOHibernateSession extends DAOHibernate {
 
     @Override
     public void deleteEntities(Collection<EnterpriseEntity> entities) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public EnterpriseEntity getEntity(EnterpriseKey key) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Collection<EnterpriseEntity> getEntities(CriteriaQuery query) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public CriteriaBuilder getCriteriaBuilder() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

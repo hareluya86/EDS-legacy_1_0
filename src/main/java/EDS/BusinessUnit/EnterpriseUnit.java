@@ -18,7 +18,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="ENTERPRISEUNIT")
-@Inheritance(strategy=InheritanceType.JOINED)
+//@MappedSuperclass
+@EntityListeners(DateCreatedListener.class)
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name="UNIT_TYPE")
 @TableGenerator(name="ENTERPRISEUNIT_SEQ",initialValue=1,allocationSize=10,table="SEQUENCE")
 public abstract class EnterpriseUnit implements EnterpriseEntity, EnterpriseKey{
@@ -45,35 +47,51 @@ public abstract class EnterpriseUnit implements EnterpriseEntity, EnterpriseKey{
 
     protected List<EnterpriseRelationship> toRelationships = new ArrayList<EnterpriseRelationship>();
     protected List<EnterpriseData> data = new ArrayList<EnterpriseData>();
+
+    public String getUNIT_TYPE() {
+        return UNIT_TYPE;
+    }
+
+    public void setUNIT_TYPE(String UNIT_TYPE) {
+        this.UNIT_TYPE = UNIT_TYPE;
+    }
     
+    @Override
     public String getCHANGED_BY() {
         return CHANGED_BY;
     }
 
+    @Override
     public void setCHANGED_BY(String CHANGED_BY) {
         this.CHANGED_BY = CHANGED_BY;
     }
 
+    @Override
     public String getCREATED_BY() {
         return CREATED_BY;
     }
 
+    @Override
     public void setCREATED_BY(String CREATED_BY) {
         this.CREATED_BY = CREATED_BY;
     }
 
+    @Override
     public Date getDATE_CHANGED() {
         return DATE_CHANGED;
     }
 
+    @Override
     public void setDATE_CHANGED(Date DATE_CHANGED) {
         this.DATE_CHANGED = DATE_CHANGED;
     }
 
+    @Override
     public Date getDATE_CREATED() {
         return DATE_CREATED;
     }
 
+    @Override
     public void setDATE_CREATED(Date DATE_CREATED) {
         this.DATE_CREATED = DATE_CREATED;
     }
@@ -151,6 +169,32 @@ public abstract class EnterpriseUnit implements EnterpriseEntity, EnterpriseKey{
      */
     @Override
     public abstract Map<String, Object> exportAsMap();
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + (int) (this.OBJECTID ^ (this.OBJECTID >>> 32));
+        hash = 97 * hash + (this.UNIT_TYPE != null ? this.UNIT_TYPE.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EnterpriseUnit other = (EnterpriseUnit) obj;
+        if (this.OBJECTID != other.OBJECTID) {
+            return false;
+        }
+        if ((this.UNIT_TYPE == null) ? (other.UNIT_TYPE != null) : !this.UNIT_TYPE.equals(other.UNIT_TYPE)) {
+            return false;
+        }
+        return true;
+    }
     
     
 }
