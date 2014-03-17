@@ -9,6 +9,8 @@ package EDS.BusinessUnit;
 import EDS.Data.EnterpriseEntity;
 import EDS.Data.EnterpriseKey;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
@@ -17,7 +19,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
 /**
- *
+ * An descriptive entity of an EnterpriseUnit
+ * <p>
+ * EnterpriseData are objects which carries attributes of an EnterpriseUnit. Each
+ * ED object is linked to only 1 EU object.
+ * 
  * @author vincent.a.lee
  */
 @Entity
@@ -89,37 +95,64 @@ public abstract class EnterpriseData implements EnterpriseEntity, EnterpriseKey{
         this.DATA_LOCK = DATA_LOCK;
     }
 
+    @Override
     public Date getDATE_CREATED() {
         return DATE_CREATED;
     }
 
+    @Override
     public void setDATE_CREATED(Date DATE_CREATED) {
         this.DATE_CREATED = DATE_CREATED;
     }
 
+    @Override
     public String getCREATED_BY() {
         return CREATED_BY;
     }
 
+    @Override
     public void setCREATED_BY(String CREATED_BY) {
         this.CREATED_BY = CREATED_BY;
     }
 
+    @Override
     public Date getDATE_CHANGED() {
         return DATE_CHANGED;
     }
 
+    @Override
     public void setDATE_CHANGED(Date DATE_CHANGED) {
         this.DATE_CHANGED = DATE_CHANGED;
     }
 
+    @Override
     public String getCHANGED_BY() {
         return CHANGED_BY;
     }
 
+    @Override
     public void setCHANGED_BY(String CHANGED_BY) {
         this.CHANGED_BY = CHANGED_BY;
     }
+
+    @Override
+    public Map<String, Object> exportAsMap(){
+        Map<String, Object> map = new HashMap<String, Object>();
+        
+        map.put("BELONG_TO_OBJECT", BELONG_TO_OBJECT);
+        map.put("DATA_TYPE", DATA_TYPE);
+        map.put("START_DATE",START_DATE);
+        map.put("END_DATE",END_DATE);
+        map.put("DATE_CREATED",DATE_CREATED);
+        map.put("CREATED_BY",CREATED_BY);
+        map.put("DATE_CHANGED",DATE_CHANGED);
+        map.put("CHANGED_BY",CHANGED_BY);
+        map.put("SEQNUM", SEQNUM);
+        map.put("DATA_LOCK",DATA_LOCK);
+        
+        return map;
+    }
+    
     
     
 }

@@ -8,6 +8,7 @@ import EDS.Data.EnterpriseEntity;
 import EDS.Data.EnterpriseKey;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
@@ -168,7 +169,22 @@ public abstract class EnterpriseUnit implements EnterpriseEntity, EnterpriseKey{
      * @return Map  A collection of <Field,Value>
      */
     @Override
-    public abstract Map<String, Object> exportAsMap();
+    public Map<String, Object> exportAsMap(){
+        Map<String, Object> map = new HashMap<String, Object>();
+        
+        map.put("OBJECTID", OBJECTID);
+        map.put("UNIT_TYPE",UNIT_TYPE);
+        map.put("START_DATE",START_DATE);
+        map.put("END_DATE",END_DATE);
+        map.put("DATE_CREATED",DATE_CREATED);
+        map.put("CREATED_BY",CREATED_BY);
+        map.put("DATE_CHANGED",DATE_CHANGED);
+        map.put("CHANGED_BY",CHANGED_BY);
+        map.put("SEARCH_TERM",SEARCH_TERM);
+        map.put("SHORT_NAME",SHORT_NAME);
+        
+        return map;
+    }
 
     @Override
     public int hashCode() {

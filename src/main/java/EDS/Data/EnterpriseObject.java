@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * An interface to represent a database object from the Enterprise System
+ * <p>
+ * 
  * @author KH
  */
 public interface EnterpriseObject extends Serializable {

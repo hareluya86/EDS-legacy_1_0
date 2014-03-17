@@ -455,6 +455,32 @@ public class DAOTest {
         }
         assertTrue(true);
     }
+    
+    @Test
+    public void testInsertEUwithERandED2() {
+        System.out.println("testInsertEUwithERandED2");
+        DAO dao1 = DAOPool.pop();
+        TestUnit tu1 = (TestUnit) testEntities.pop();
+        
+        TestData td1 = new TestData();
+        TestData td2 = new TestData();
+        TestData td3 = new TestData();
+        td1.randInit();
+        td2.randInit();
+        td3.randInit();
+        
+        //tu1.getData().add(td1);
+        //tu1.getData().add(td2);
+        //tu1.getData().add(td3);
+        
+        List<EnterpriseEntity> insertAsAUnit = new ArrayList<EnterpriseEntity>();
+        insertAsAUnit.add(tu1);
+        
+        dao1.insertEntity(tu1);
+        
+        
+        
+    }
 
     @Test
     public void testInsertEUandDelete(){

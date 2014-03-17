@@ -4,8 +4,9 @@
  */
 package EDS.BusinessUnit.Test;
 
+import EDS.BusinessUnit.EnterpriseUnit;
 import EDS.BusinessUnit.EnterpriseUnit_;
-import java.util.Map;
+import javax.persistence.metamodel.SingularAttribute;
 
 /**
  *
@@ -13,5 +14,6 @@ import java.util.Map;
  */
 public class TestUnit_ extends EnterpriseUnit_ {
 
-    
+    public static volatile SingularAttribute<EnterpriseUnit,String> TESTVARIABLE1;
+    public static volatile SingularAttribute<EnterpriseUnit,String> TESTVARIABLE2;
 }

@@ -64,20 +64,10 @@ public class TestUnit extends EnterpriseUnit {
 
     @Override
     public Map<String, Object> exportAsMap() {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = super.exportAsMap();
         
-        map.put("OBJECTID", this.OBJECTID);
-        map.put("START_DATE", this.START_DATE);
-        map.put("END_DATE", this.END_DATE);
-        map.put("CHANGED_BY", this.CHANGED_BY);
-        map.put("DATE_CHANGED", this.DATE_CHANGED);
-        map.put("CREATED_BY", this.CREATED_BY);
-        map.put("DATE_CREATED", this.DATE_CREATED);
-        map.put("SEARCH_TERM", this.SEARCH_TERM);
-        map.put("SHORT_NAME", this.SHORT_NAME);
         map.put("TESTVARIABLE1", this.TESTVARIABLE1);
         map.put("TESTVARIABLE2", this.TESTVARIABLE2);
-        map.put("UNIT_TYPE", this.UNIT_TYPE);
         
         return map;
     }

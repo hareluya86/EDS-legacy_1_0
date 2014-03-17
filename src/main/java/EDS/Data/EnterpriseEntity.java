@@ -6,7 +6,15 @@ package EDS.Data;
 
 
 /**
- *
+ * An interface to represent an Entity from the Enterprise system for audit/
+ * reporting purpose
+ * <p>
+ * Basic operations include:
+ * - Finding the start and end periods of this entity
+ * - Finding the creation and last changed date of this entity
+ * - Finding the user who created and last edited this entity
+ * - Populating this entity with test data (only used in the dev/test environment!)
+ * 
  * @author KH
  */
 public interface EnterpriseEntity extends EnterpriseObject{
