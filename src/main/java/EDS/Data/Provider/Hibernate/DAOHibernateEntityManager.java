@@ -4,6 +4,7 @@
  */
 package EDS.Data.Provider.Hibernate;
 
+import EDS.Data.DAOFactoryType;
 import EDS.Data.DBConnectionException;
 import EDS.Data.EnterpriseEntity;
 import EDS.Data.EnterpriseKey;

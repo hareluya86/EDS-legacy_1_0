@@ -6,6 +6,7 @@ package EDS.Data;
 
 import EDS.Data.Provider.Eclipselink.DAOFactoryEclipselink;
 import EDS.Data.Provider.Hibernate.DAOFactoryHibernate;
+import javax.inject.Inject;
 
 /**
  *
@@ -23,7 +24,11 @@ public abstract class DAOFactory {
     
     private static JPAType DEFAULT_PROVIDER = JPAType.ECLIPSELINK;
     
+    /*@Inject @DAOType(DAOType.Impl.ECLIPSELINK)
+    DAO DAOEclipseLink;*/
+    
     public static DAOFactory getDAOFactory(JPAType type){
+        
         switch(type){
             case ECLIPSELINK : return new DAOFactoryEclipselink();
             case HIBERNATE : return new DAOFactoryHibernate();

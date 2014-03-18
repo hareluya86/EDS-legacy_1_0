@@ -5,6 +5,7 @@
 package EDS.Data.Provider.Eclipselink;
 
 import EDS.Data.DAO;
+import EDS.Data.DAOFactoryType;
 import EDS.Data.EnterpriseEntity;
 import EDS.Data.EnterpriseKey;
 import java.util.Collection;
@@ -17,6 +18,7 @@ import javax.persistence.criteria.CriteriaQuery;
  *
  * @author KH
  */
+@DAOFactoryType("ECLIPSELINK")
 public class DAOEclipselink extends DAO{
 
     private Map<String,Object> DBConfig;

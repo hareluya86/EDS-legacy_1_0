@@ -6,12 +6,14 @@ package EDS.Data.Provider.Hibernate;
 
 import EDS.Data.DAO;
 import EDS.Data.DAOFactory;
+import EDS.Data.DAOFactoryType;
 import org.hibernate.cfg.Configuration;
 
 /**
  *
  * @author KH
  */
+@DAOFactoryType("HIBERNATE")
 public class DAOFactoryHibernate extends DAOFactory {
 
     enum CONFIG_TYPE {

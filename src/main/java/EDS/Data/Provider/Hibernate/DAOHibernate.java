@@ -5,12 +5,14 @@
 package EDS.Data.Provider.Hibernate;
 
 import EDS.Data.DAO;
+import EDS.Data.DAOFactoryType;
 import org.hibernate.cfg.Configuration;
 
 /**
  *
  * @author KH
  */
+
 public abstract class DAOHibernate extends DAO {
 
     protected Configuration cfg;

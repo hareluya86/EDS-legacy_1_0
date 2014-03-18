@@ -5,7 +5,6 @@
 package EDS.Data;
 
 import EDS.BusinessUnit.EnterpriseRelationship;
-import EDS.BusinessUnit.EnterpriseUnit_;
 import EDS.BusinessUnit.Test.TestData;
 import EDS.BusinessUnit.Test.TestRelationshipA;
 import EDS.BusinessUnit.Test.TestUnit;
@@ -13,6 +12,7 @@ import EDS.BusinessUnit.Test.TestUnit_;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -37,6 +37,9 @@ public class DAOTest {
     
     final DAOFactory.JPAType DEFAULT_JPA_PROVIDER = DAOFactory.JPAType.HIBERNATE;
     
+    @Inject @DAOFactoryType("HIBERNATE")
+    DAOFactory daoFactoryHibernate;
+    
     public DAOTest() {
         
     }
@@ -55,7 +58,9 @@ public class DAOTest {
         DAOPool = new Stack<DAO>();
         testEntities = new Stack<EnterpriseEntity>();
         for(int i=0; i<numOfDAOs; i++){
-            DAO daoTemp = DAOFactory.getDAOFactory(DEFAULT_JPA_PROVIDER).getDAO();
+            
+            DAO daoTemp = DAOFactory.getDAOFactory(DEFAULT_JPA_PROVIDER).getDAO();//daoFactoryHibernate.getDAO();
+            
             DAOPool.push(daoTemp);
         }
         
@@ -449,14 +454,14 @@ public class DAOTest {
         }catch(DBConnectionException dbce){
             fail("Database connection not opened!");
             dbce.printStackTrace(System.out);
-        }catch(Throwable ex){
+        }/*catch(Throwable ex){
             fail("Failed: "+ex.getMessage());
             ex.printStackTrace();
-        }
+        }*/
         assertTrue(true);
     }
     
-    @Test
+    //@Test
     public void testInsertEUwithERandED2() {
         System.out.println("testInsertEUwithERandED2");
         DAO dao1 = DAOPool.pop();
@@ -469,14 +474,27 @@ public class DAOTest {
         td2.randInit();
         td3.randInit();
         
-        //tu1.getData().add(td1);
+        tu1.getData().add(td1);
         //tu1.getData().add(td2);
         //tu1.getData().add(td3);
         
         List<EnterpriseEntity> insertAsAUnit = new ArrayList<EnterpriseEntity>();
         insertAsAUnit.add(tu1);
+        try{
+            dao1.init();
+            dao1.start();
+            
+            dao1.insertEntity(tu1);
+            dao1.commit();
+            dao1.start();
+            dao1.insertEntity(td1);
+            
+            dao1.commit();
+        }catch(DBConnectionException dbce){
+            fail("Database connection not opened!");
+            dbce.printStackTrace(System.out);
+        }
         
-        dao1.insertEntity(tu1);
         
         
         
@@ -498,10 +516,10 @@ public class DAOTest {
         }catch(DBConnectionException dbce){
             fail("Database connection not opened!");
             dbce.printStackTrace(System.out);
-        }catch(Throwable ex){
+        }/*catch(Throwable ex){
             fail("Failed: "+ex.getMessage());
             ex.printStackTrace();
-        }
+        }*/
         DAO dao2 = DAOPool.pop();
         dao2.init();
         TestUnit tu2 = (TestUnit) dao2.getEntity(tu1);

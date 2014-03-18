@@ -152,7 +152,7 @@ public abstract class EnterpriseUnit implements EnterpriseEntity, EnterpriseKey{
     }
 
     
-    @OneToMany(fetch=FetchType.LAZY)
+    @OneToMany(fetch=FetchType.LAZY,mappedBy="BELONG_TO_OBJECT")
     //@JoinColumn(name="BELONG_TO_OBJECT_OBJECTID")
     public List<EnterpriseData> getData() {
         return data;
