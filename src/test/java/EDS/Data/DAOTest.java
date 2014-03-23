@@ -73,7 +73,13 @@ public class DAOTest {
     
     @After
     public void tearDown() {
-        
+        if(DAOPool != null){
+            for(DAO dao:DAOPool){
+                if(dao != null){
+                    dao.close();
+                }
+            }
+        }
     }
     
     /**
@@ -90,6 +96,7 @@ public class DAOTest {
             dao1.commit();
             dao1.close();
         }catch(Exception e){
+            e.printStackTrace(System.out);
             fail(e.getMessage());
         }
         assertTrue(true);
@@ -140,6 +147,7 @@ public class DAOTest {
             dao1.init();
         }catch(Exception e){
             fail(e.getMessage());
+            dao1.close();
         }
         assertTrue(true);
     }
@@ -271,7 +279,9 @@ public class DAOTest {
         try{
             dao1.insertEntity(test);
         }catch(javax.persistence.TransactionRequiredException ex){
+            ex.printStackTrace(System.out);
             dao1.insertEntity(test);
+            
         }
         
     }
@@ -288,6 +298,7 @@ public class DAOTest {
         try{
             dao1.updateEntity(test);
         }catch(javax.persistence.TransactionRequiredException ex){
+            ex.printStackTrace(System.out);
             dao1.updateEntity(test);
         }
         
@@ -305,6 +316,7 @@ public class DAOTest {
         try{
             dao1.deleteEntity(test);
         }catch(javax.persistence.TransactionRequiredException ex){
+            ex.printStackTrace(System.out);
             dao1.deleteEntity(test);
         }
         
@@ -321,7 +333,9 @@ public class DAOTest {
         try{
             dao1.insertEntities(testEntities);
         }catch(javax.persistence.TransactionRequiredException ex){
+            ex.printStackTrace(System.out);
             dao1.insertEntities(testEntities);
+            
         }
         
     }
@@ -337,7 +351,9 @@ public class DAOTest {
         try{
             dao1.updateEntities(testEntities);
         }catch(javax.persistence.TransactionRequiredException ex){
+            ex.printStackTrace(System.out);
             dao1.updateEntities(testEntities);
+            
         }
         
     }
@@ -353,7 +369,11 @@ public class DAOTest {
         try{
             dao1.deleteEntities(testEntities);
         }catch(javax.persistence.TransactionRequiredException ex){
+            ex.printStackTrace(System.out);
             dao1.deleteEntities(testEntities);
+        }//debug
+        catch(org.hibernate.MappingException mex){
+            mex.printStackTrace(System.out);
         }
         
     }
@@ -361,12 +381,12 @@ public class DAOTest {
     /**
      * TCER 21
      */
-    @Test(expected=java.lang.NullPointerException.class)
+    @Test(expected=javax.persistence.TransactionRequiredException.class)
     public void illegalSequenceOfCall_21() throws DBConnectionException{
         System.out.println("TCER 21: withoutSetup_21");
         DAO dao1 = DAOPool.pop();
         EnterpriseEntity test = testEntities.pop();
-        dao1.insertEntity(test);   
+        dao1.insertEntity(test);
     }
     
     /**

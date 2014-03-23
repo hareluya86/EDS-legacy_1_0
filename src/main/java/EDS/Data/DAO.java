@@ -4,6 +4,7 @@
  */
 package EDS.Data;
 
+import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,7 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
  *
  * @author KH
  */
-public abstract class DAO {
+public abstract class DAO implements Serializable {
     
     /**
      * Initializes the DAO with the persistence provider.

@@ -6,13 +6,15 @@ package EDS.Data;
 
 import EDS.Data.Provider.Eclipselink.DAOFactoryEclipselink;
 import EDS.Data.Provider.Hibernate.DAOFactoryHibernate;
+import java.io.Serializable;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
  *
  * @author KH
  */
-public abstract class DAOFactory {
+public abstract class DAOFactory implements Serializable {
     
     /*
      * To decide which JPA Provider to user

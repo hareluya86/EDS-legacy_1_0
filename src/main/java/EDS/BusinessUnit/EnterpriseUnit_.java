@@ -16,7 +16,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(EnterpriseUnit.class)
 public class EnterpriseUnit_ {
     public static volatile SingularAttribute<EnterpriseUnit,Long> OBJECTID;
-    //public static volatile SingularAttribute<EnterpriseUnit,String> OBJECT_TYPE;
+    public static volatile SingularAttribute<EnterpriseUnit,String> UNIT_TYPE;
     public static volatile SingularAttribute<EnterpriseUnit,java.sql.Date> START_DATE;
     public static volatile SingularAttribute<EnterpriseUnit,java.sql.Date> END_DATE;
     public static volatile SingularAttribute<EnterpriseUnit,java.sql.Date> DATE_CREATED;

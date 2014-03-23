@@ -95,6 +95,7 @@ public class DAOHibernateEntityManager extends DAOHibernate {
 
     @Override
     public void insertEntity(EnterpriseEntity entity) {
+        if(em == null) init();
         em.persist(entity);
         em.flush(); //pushes entity to datastore (provider's cache), but doesn't commit to database!
 
