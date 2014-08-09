@@ -6,7 +6,7 @@
 
 package EDS.BusinessUnit;
 
-import EDS.Data.EnterpriseEntity;
+import Dropped.EDS.Data.EnterpriseEntity;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import org.joda.time.DateTime;

@@ -7,7 +7,7 @@
 package Test.EDS.BusinessUnit;
 
 import EDS.BusinessUnit.EnterpriseData;
-import EDS.Data.EnterpriseKey;
+import Dropped.EDS.Data.EnterpriseKey;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Entity;

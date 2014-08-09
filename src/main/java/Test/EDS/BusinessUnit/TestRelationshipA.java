@@ -6,7 +6,7 @@ package Test.EDS.BusinessUnit;
 
 import EDS.BusinessUnit.EnterpriseRelationship;
 import EDS.BusinessUnit.EnterpriseRelationshipId;
-import EDS.Data.EnterpriseKey;
+import Dropped.EDS.Data.EnterpriseKey;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;

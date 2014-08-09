@@ -1,6 +1,6 @@
 
-import EDS.Data.DAOFactory;
-import EDS.Data.DAOFactoryType;
+import Dropped.EDS.Data.DAOFactory;
+import Dropped.EDS.Data.DAOFactoryType;
 import javax.inject.Inject;
 
 /*

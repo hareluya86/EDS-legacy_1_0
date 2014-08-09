@@ -4,8 +4,8 @@
  */
 package EDS.BusinessUnit;
 
-import EDS.Data.EnterpriseEntity;
-import EDS.Data.EnterpriseKey;
+import Dropped.EDS.Data.EnterpriseEntity;
+import Dropped.EDS.Data.EnterpriseKey;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
