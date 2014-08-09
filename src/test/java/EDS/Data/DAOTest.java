@@ -5,10 +5,10 @@
 package EDS.Data;
 
 import EDS.BusinessUnit.EnterpriseRelationship;
-import EDS.BusinessUnit.Test.TestData;
-import EDS.BusinessUnit.Test.TestRelationshipA;
-import EDS.BusinessUnit.Test.TestUnit;
-import EDS.BusinessUnit.Test.TestUnit_;
+import Test.EDS.BusinessUnit.TestData;
+import Test.EDS.BusinessUnit.TestRelationshipA;
+import Test.EDS.BusinessUnit.TestUnit;
+import Test.EDS.BusinessUnit.TestUnit_;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;

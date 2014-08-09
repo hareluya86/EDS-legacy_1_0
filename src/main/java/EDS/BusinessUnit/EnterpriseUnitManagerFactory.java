@@ -4,7 +4,7 @@
  */
 package EDS.BusinessUnit;
 
-import EDS.BusinessUnit.Test.TestUnit;
+import Test.EDS.BusinessUnit.TestUnit;
 import EDS.Context.ContextContainer;
 import java.util.HashMap;
 import java.util.Map;
